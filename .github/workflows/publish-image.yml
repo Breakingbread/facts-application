@@ -1,0 +1,16 @@
+name: Build & Push Image
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build and Push Docker Image
+        run: |
+          docker login --username lum1nxus ${{ secrets.REGISTRY_TOKEN }} ghcr.io
+          docker build . --tag ghcr.io/lum1nxus/facts-microservice:latest
+          docker push ghcr.io/lum1nxus/facts-microservice:latest
+          
