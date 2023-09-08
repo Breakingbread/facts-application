@@ -31,11 +31,16 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.REGISTRY_TOKEN }}
 
+      - name: Set lowercase owner
+        id: organization
+        uses: ASzc/change-string-case-action@v5
+        with:
+          string: ${{ github.repository_owner }}
 
       - name: Build and push docker image
         uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
         with:
           context: .
           push: true
-          tags: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.SERVICE_NAME }}:${{ env.BUILD_NUMBER }}
+          tags: ${{ env.REGISTRY }}/${{ steps.organization.outputs.lowercase }}/${{ env.SERVICE_NAME }}:${{ env.BUILD_NUMBER }}
 
