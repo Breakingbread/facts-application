@@ -2,6 +2,10 @@ name: Build & Push Image
 
 on:
   workflow_dispatch:
+    inputs:
+      service_name:
+        description: 'Service Name'
+        required: true
 
 
 env:
